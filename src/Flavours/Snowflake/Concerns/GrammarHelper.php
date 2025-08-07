@@ -55,7 +55,7 @@ trait GrammarHelper
      */
     public function getValue($expression)
     {
-        return $expression instanceof Expression ? $expression->getValue() : $expression;
+        return $expression instanceof Expression ? $expression->getValue($this) : $expression;
     }
 
     /**
@@ -84,6 +84,10 @@ trait GrammarHelper
      */
     protected function wrapColumn($column)
     {
+        if (method_exists($this, 'isExpression') && $this->isExpression($column)) {
+            return $this->getValue($column);
+        }
+
         if ($column instanceof ColumnDefinition) {
             $column = $column->get('name');
         }
