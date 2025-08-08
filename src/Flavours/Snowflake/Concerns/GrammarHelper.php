@@ -37,9 +37,8 @@ trait GrammarHelper
      */
     public function wrapTable($table)
     {
-        $table = Processor::wrapTable($table);
-
         if (method_exists($this, 'isExpression') && ! $this->isExpression($table)) {
+            $table = Processor::wrapTable($table);
             return $this->wrap($this->tablePrefix.$table, true);
         }
 
